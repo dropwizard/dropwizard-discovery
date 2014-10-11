@@ -1,0 +1,5 @@
+io.dropwizard.discovery
+io.dropwizard.discovery.client
+io.dropwizard.discovery.core
+io.dropwizard.discovery.health
+io.dropwizard.discovery.manage
