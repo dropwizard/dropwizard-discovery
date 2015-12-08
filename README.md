@@ -48,10 +48,10 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
 
             @Override
             public DiscoveryFactory getDiscoveryFactory(HelloWorldConfiguration configuration) {
-                return configuration.getDiscovery();
+                return configuration.getDiscoveryFactory();
             }
 
-        });
+        };
 
     @Override
     public void initialize(Bootstrap<HelloWorldConfiguration> bootstrap) {
