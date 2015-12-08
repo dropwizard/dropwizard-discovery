@@ -15,6 +15,7 @@ public class CuratorAdvertisementListener<T> implements ServerLifecycleListener 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(CuratorAdvertisementListener.class);
     private static final String APPLICATION_CONNECTOR = "application";
+    private static final String ADMIN_CONNECTOR = "admin";
     private final CuratorAdvertiser<T> advertiser;
 
     /**
@@ -31,22 +32,36 @@ public class CuratorAdvertisementListener<T> implements ServerLifecycleListener 
     @Override
     public void serverStarted(final Server server) {
         // Detect the port Jetty is listening on - works with configured and
-        // random port
+        // random ports
+        int listenPort = 0;
+        Integer adminPort = null;
         for (final Connector connector : server.getConnectors()) {
-            if (APPLICATION_CONNECTOR.equals(connector.getName())) {
+            try {
                 final ServerSocketChannel channel = (ServerSocketChannel) connector
                         .getTransport();
+                final InetSocketAddress socket = (InetSocketAddress) channel
+                        .getLocalAddress();
 
-                try {
-                    final InetSocketAddress socket = (InetSocketAddress) channel
-                            .getLocalAddress();
-                    advertiser.initListenInfo(socket.getPort());
-                    advertiser.registerAvailability();
-                    return;
-                } catch (final Exception e) {
-                    LOGGER.error("Unable to register service in ZK", e);
+                switch (connector.getName()) {
+                case APPLICATION_CONNECTOR:
+                    listenPort = socket.getPort();
+                    break;
+                case ADMIN_CONNECTOR:
+                    adminPort = socket.getPort();
+                    break;
                 }
+            } catch (Exception e) {
+                LOGGER.error(
+                        "Unable to get port from connector: "
+                                + connector.getName(), e);
             }
+        }
+
+        try {
+            advertiser.initListenInfo(listenPort, adminPort);
+            advertiser.registerAvailability();
+        } catch (final Exception e) {
+            LOGGER.error("Unable to register service in ZK", e);
         }
     }
 }

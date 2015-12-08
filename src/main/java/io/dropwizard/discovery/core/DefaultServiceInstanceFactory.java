@@ -10,7 +10,7 @@ public class DefaultServiceInstanceFactory implements
             CuratorAdvertiser<InstanceMetadata> advertiser) throws Exception {
         final InstanceMetadata metadata = new InstanceMetadata(
                 advertiser.getInstanceId(), advertiser.getListenAddress(),
-                advertiser.getListenPort());
+                advertiser.getListenPort(), advertiser.getAdminPort());
         return ServiceInstance.<InstanceMetadata> builder().name(serviceName)
                 .address(advertiser.getListenAddress())
                 .port(advertiser.getListenPort())

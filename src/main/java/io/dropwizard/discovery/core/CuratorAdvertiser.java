@@ -7,6 +7,7 @@ import java.net.SocketException;
 import java.util.Collection;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 import org.apache.curator.framework.CuratorFramework;
@@ -17,6 +18,7 @@ import org.apache.curator.x.discovery.ServiceInstance;
 import org.apache.curator.x.discovery.ServiceInstanceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 
 @ThreadSafe
@@ -34,6 +36,9 @@ public class CuratorAdvertiser<T> implements ConnectionStateListener {
 
     @GuardedBy("this")
     private int listenPort = 0;
+
+    @GuardedBy("this")
+    private Integer adminPort = null;
 
     @GuardedBy("this")
     private ServiceInstance<T> instance;
@@ -60,9 +65,13 @@ public class CuratorAdvertiser<T> implements ConnectionStateListener {
      * 
      * @param port
      *            port this instance is listening on
+     * @param adminPort
+     *            optional admin port this instance is listening on
      */
-    public synchronized void initListenInfo(final int port) {
-        listenPort = port;
+    public synchronized void initListenInfo(final int port,
+            @Nullable final Integer adminPort) {
+        this.listenPort = port;
+        this.adminPort = adminPort;
 
         if (!Strings.isNullOrEmpty(configuration.getListenAddress())) {
             LOGGER.info("Using '{}' as listenAddress from configuration file",
@@ -166,6 +175,15 @@ public class CuratorAdvertiser<T> implements ConnectionStateListener {
      */
     public int getListenPort() {
         return listenPort;
+    }
+
+    /**
+     * Return the admin port
+     *
+     * @return port number
+     */
+    public Optional<Integer> getAdminPort() {
+        return Optional.fromNullable(adminPort);
     }
 
     /**

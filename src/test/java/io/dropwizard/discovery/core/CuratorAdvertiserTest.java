@@ -9,6 +9,7 @@ import org.apache.curator.x.discovery.ServiceDiscovery;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.junit.Before;
 import org.junit.Test;
+import com.google.common.base.Optional;
 
 public class CuratorAdvertiserTest {
 
@@ -26,8 +27,19 @@ public class CuratorAdvertiserTest {
     @Test
     public void testInitListenInfo() throws Exception {
         factory.setListenAddress("127.0.0.1");
-        advertiser.initListenInfo(8080);
+        advertiser.initListenInfo(8080, 8180);
         assertThat(advertiser.getListenPort()).isEqualTo(8080);
+        assertThat(advertiser.getAdminPort()).isEqualTo(Optional.of(8180));
+        assertThat(advertiser.getListenAddress()).isEqualTo("127.0.0.1");
+    }
+
+    @Test
+    public void testInitListenInfoNoAdmin() throws Exception {
+        factory.setListenAddress("127.0.0.1");
+        advertiser.initListenInfo(8080, null);
+        assertThat(advertiser.getListenPort()).isEqualTo(8080);
+        assertThat(advertiser.getAdminPort()).isEqualTo(
+                Optional.<Integer> absent());
         assertThat(advertiser.getListenAddress()).isEqualTo("127.0.0.1");
     }
 
@@ -39,7 +51,7 @@ public class CuratorAdvertiserTest {
         } catch (final IllegalStateException ignore) {
         }
 
-        advertiser.initListenInfo(8080);
+        advertiser.initListenInfo(8080, null);
         advertiser.checkInitialized();
     }
 
@@ -51,7 +63,7 @@ public class CuratorAdvertiserTest {
         } catch (final IllegalStateException ignore) {
         }
 
-        advertiser.initListenInfo(8080);
+        advertiser.initListenInfo(8080, null);
         final ServiceInstance<InstanceMetadata> instance = advertiser
                 .getInstance();
         advertiser.registerAvailability(instance);
@@ -66,7 +78,7 @@ public class CuratorAdvertiserTest {
         } catch (final IllegalStateException ignore) {
         }
 
-        advertiser.initListenInfo(8080);
+        advertiser.initListenInfo(8080, null);
         final ServiceInstance<InstanceMetadata> instance = advertiser
                 .getInstance();
         advertiser.unregisterAvailability(instance);

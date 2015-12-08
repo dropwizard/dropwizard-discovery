@@ -2,6 +2,7 @@ package io.dropwizard.discovery.core;
 
 import io.dropwizard.validation.PortRange;
 import java.util.UUID;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
 
 @Immutable
 public final class InstanceMetadata {
@@ -22,13 +24,23 @@ public final class InstanceMetadata {
     @PortRange
     private final int listenPort;
 
+    @Nullable
+    @PortRange
+    private final Integer adminPort;
+
     @JsonCreator
     public InstanceMetadata(@JsonProperty("instanceId") final UUID instanceId,
             @JsonProperty("listenAddress") final String listenAddress,
-            @JsonProperty("listenPort") final int listenPort) {
+            @JsonProperty("listenPort") final int listenPort,
+            @JsonProperty("adminPort") final Optional<Integer> adminPort) {
         this.instanceId = instanceId;
         this.listenAddress = listenAddress;
         this.listenPort = listenPort;
+        if (adminPort == null) {
+            this.adminPort = null;
+        } else {
+            this.adminPort = adminPort.orNull();
+        }
     }
 
     @JsonProperty
@@ -46,6 +58,11 @@ public final class InstanceMetadata {
         return listenPort;
     }
 
+    @JsonProperty
+    public Optional<Integer> getAdminPort() {
+        return Optional.fromNullable(adminPort);
+    }
+
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
@@ -58,18 +75,21 @@ public final class InstanceMetadata {
         final InstanceMetadata other = (InstanceMetadata) obj;
         return Objects.equal(instanceId, other.instanceId)
                 && Objects.equal(listenAddress, other.listenAddress)
-                && Objects.equal(listenPort, other.listenPort);
+                && Objects.equal(listenPort, other.listenPort)
+                && Objects.equal(adminPort, other.adminPort);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(instanceId, listenAddress, listenPort);
+        return Objects.hashCode(instanceId, listenAddress, listenPort,
+                adminPort);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("instanceId", instanceId)
                 .add("listenAddress", listenAddress)
-                .add("listenPort", listenPort).toString();
+                .add("listenPort", listenPort).add("adminPort", adminPort)
+                .toString();
     }
 }

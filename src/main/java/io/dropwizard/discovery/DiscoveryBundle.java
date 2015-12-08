@@ -37,5 +37,4 @@ public abstract class DiscoveryBundle<T extends Configuration> extends
     public Class<InstanceMetadata> getPayloadClass() {
         return serviceInstanceFactory.getPayloadClass();
     }
-
 }
