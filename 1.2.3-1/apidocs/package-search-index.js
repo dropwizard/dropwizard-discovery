@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"io.dropwizard.discovery"},{"l":"io.dropwizard.discovery.client"},{"l":"io.dropwizard.discovery.core"},{"l":"io.dropwizard.discovery.health"},{"l":"io.dropwizard.discovery.manage"}]
