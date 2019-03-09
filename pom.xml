@@ -77,6 +77,12 @@
             <email>jplock@smoketurner.com</email>
             <timezone>America/New_York</timezone>
         </developer>
+        <developer>
+            <id>kstafford3</id>
+            <name>Kyle Stafford</name>
+            <email>kyle@kstafford3.com</email>
+            <timezone>America/New_York</timezone>
+        </developer>
     </developers>
 
     <properties>

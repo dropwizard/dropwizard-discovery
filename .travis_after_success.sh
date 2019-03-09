@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "${TRAVIS_JDK_VERSION}" != "oraclejdk8" ]]; then
+if [[ "${TRAVIS_JDK_VERSION}" != "openjdk8" ]]; then
     echo "Skipping after_success actions for JDK version \"${TRAVIS_JDK_VERSION}\""
     exit
 fi
@@ -17,7 +17,7 @@ if [[ ${TRAVIS_BRANCH} != 'master' ]]; then
     exit
 fi
 
-if [[ "$TRAVIS_PULL_REQUEST" = "true" ]]; then
+if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "Skipping deployment for pull request"
     exit
 fi
