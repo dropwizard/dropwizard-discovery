@@ -3,8 +3,9 @@ dist: trusty
 language: java
 jdk:
   - openjdk8
+  - openjdk11
 before_install:
-  - rm ~/.m2/settings.xml || true 
+  - rm ~/.m2/settings.xml || true
   - ulimit -c unlimited -S
   - mvn -N io.takari:maven:wrapper
 after_success:
