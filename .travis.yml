@@ -12,11 +12,8 @@ after_success:
   - bash .travis_after_success.sh
 cache:
   directories:
-    - $HOME/.m2
-
+    - "$HOME/.m2"
 env:
   global:
-    # CI_DEPLOY_USERNAME
-    - secure: "brHZc6AaCVg7voivK3ssi8N+3Id+STnRE0WQ9HfPRYApearIR9U05Su/icAiwFB8uFyv/TMclR4FygWuj7A9cnH2YT5XCBIsffMYu7E/+86zDfX/+7yIfxLJDLQ4A3AWCrIQ4VBTdaOnrqbGiVGQ7PL4hOTcwA3pZQhsjqkPkWE="
-    # CI_DEPLOY_PASSWORD
-    - secure: "T/qwRIqaFqVwcEHLGnGHbTwBpWp5B5rLTO8+cLri4MZ1lVx9i6qwB8qPAcSKA2wBKl7gXiOFdmxQeCmZ9lwwWNEJgdHhpUwR5fS85ahNU4dSkrPhJIW4thnbFLYFyNTmq+RQALIK+DdkJ0t+cj4llEbEjjWXfNBU/Uv9eIpiSFo="
+    - secure: "vCjKpscHhzXAxTKnPeMPOTn3LY6XSskzmGOHi9jNzncAXLs8rBv2Q+fE3zAiX0x+NQ030AeimTfCcgWCIBQuh7CbpanYJG4meaBkY8oA8qdcwYSCOSC0bMZM8GLFEhemaqFhzHLofm70XaC4KFkXyAMiz3z5wowOnah1irrCnlU="
+    - secure: "uDBvetN5ZEYmOS3qn9GTOk4XGz2IOvQb7+mBtEprJFpI7hwwz6mjBs2MMeqINKC8Svw4s1CfT426bXaeLImPOIJQhvRx8NXWxrcYbnmFXgIejVvthXMpDDwgLIVxakr2SZgrvwMXu/e9rM3cma3ka5kQ0fzBIgE6OALqkvuZdaM="
