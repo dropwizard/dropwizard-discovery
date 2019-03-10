@@ -17,9 +17,9 @@ if [[ ${TRAVIS_BRANCH} != 'master' ]]; then
     exit
 fi
 
-if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
-    echo "Skipping deployment for pull request"
-    exit
-fi
+#if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
+#    echo "Skipping deployment for pull request"
+#    exit
+#fi
 
 ./mvnw -B deploy --settings maven_deploy_settings.xml -Dmaven.test.skip=true -Dfindbugs.skip=true
