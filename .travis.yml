@@ -2,21 +2,18 @@ sudo: false
 dist: trusty
 language: java
 jdk:
-  - openjdk8
-  - openjdk11
+- openjdk8
+- openjdk11
 before_install:
-  - rm ~/.m2/settings.xml || true
-  - ulimit -c unlimited -S
-  - mvn -N io.takari:maven:wrapper
+- rm ~/.m2/settings.xml || true
+- ulimit -c unlimited -S
+- mvn -N io.takari:maven:wrapper
 after_success:
-  - bash .travis_after_success.sh
+- bash .travis_after_success.sh
 cache:
   directories:
-    - $HOME/.m2
-
+  - "$HOME/.m2"
 env:
   global:
-    # CI_DEPLOY_USERNAME
-    - secure: "brHZc6AaCVg7voivK3ssi8N+3Id+STnRE0WQ9HfPRYApearIR9U05Su/icAiwFB8uFyv/TMclR4FygWuj7A9cnH2YT5XCBIsffMYu7E/+86zDfX/+7yIfxLJDLQ4A3AWCrIQ4VBTdaOnrqbGiVGQ7PL4hOTcwA3pZQhsjqkPkWE="
-    # CI_DEPLOY_PASSWORD
-    - secure: "T/qwRIqaFqVwcEHLGnGHbTwBpWp5B5rLTO8+cLri4MZ1lVx9i6qwB8qPAcSKA2wBKl7gXiOFdmxQeCmZ9lwwWNEJgdHhpUwR5fS85ahNU4dSkrPhJIW4thnbFLYFyNTmq+RQALIK+DdkJ0t+cj4llEbEjjWXfNBU/Uv9eIpiSFo="
+  - secure: h+RdG5sP5SH9PoGjB0K9SC+GJueLf3nz7CBkExFY1O4xQldnAjVKh335L+olS72XwqU2LFiYjULK29dKnwbblAilB3tmvEAxLpvOJiztuBfzwVokliB4N+AiF0ARu1WVunI1YaVxiEHmTmnIA9cCXOMByIDEpSDJcFyCbolknpY=
+  - secure: pMwwEx5S6RJhn8GM/mB85u9yII8wn9KCSSKkkU4vjM2RXCgz/cwE8ia7dbrI/PZdILBS5+R7wV04KD/FNPnR/3JSlRLWRljuJHy3hGrvoLqlM28rAY0xkFWatSGhSSN6k31LXiETGKI9kGDJe5CCo8Vwcyfim7aYhfv93/DQbUM=
